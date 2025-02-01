@@ -1,0 +1,20 @@
+﻿## .NET Core
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+## IDE - Rider
+.idea/
+*.sln.iml
+
+## VS Code
+.vscode/
+*.code-workspace
+
+## Environment
+appsettings.*.json
+!appsettings.json
+!appsettings.Example.json
