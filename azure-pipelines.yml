@@ -23,14 +23,6 @@ steps:
       dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)/api
     displayName: 'Build & Publish API'
 
-  # Publish the build artifacts
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Build Artifacts'
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/api'
-      ArtifactName: 'api'
-      publishLocation: 'Container'
-
   # Deploy to Azure App Service
   - task: AzureWebApp@1
     displayName: 'Deploy API to Azure'
