@@ -1,11 +1,11 @@
 trigger:
-  - main  # Runs on every push to main
+  - main
 
 pool:
-  vmImage: ubuntu-latest  # Use a Linux VM
+  vmImage: ubuntu-latest
 
 variables:
-  dotnetVersion: '6.0.x'  # Adjust based on your .NET version
+  dotnetVersion: '9.0.x'
 
 steps:
   # Install .NET SDK
