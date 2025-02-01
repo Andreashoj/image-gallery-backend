@@ -23,11 +23,20 @@ steps:
       dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)/api
     displayName: 'Build & Publish API'
 
+  # Publish the build artifacts
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Build Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/api'
+      ArtifactName: 'api'
+      publishLocation: 'Container'
+
   # Deploy to Azure App Service
   - task: AzureWebApp@1
     displayName: 'Deploy API to Azure'
     inputs:
-      azureSubscription: 'azure-connection'
+      azureSubscription: 'Azure subscription 1(d6e91656-92a9-4186-974f-74f4177bfd67)'
       appName: 'image-gallery-backend'
       package: '$(Build.ArtifactStagingDirectory)/api'
       appType: 'webApp'  # Specify the app type here
+
