@@ -1,0 +1,33 @@
+trigger:
+  - main  # Runs on every push to main
+
+pool:
+  vmImage: ubuntu-latest  # Use a Linux VM
+
+variables:
+  dotnetVersion: '6.0.x'  # Adjust based on your .NET version
+
+steps:
+  # Install .NET SDK
+  - task: UseDotNet@2
+    displayName: 'Install .NET SDK'
+    inputs:
+      packageType: 'sdk'
+      version: $(dotnetVersion)
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  # Restore, Build, and Publish the API
+  - script: |
+      dotnet restore
+      dotnet build --configuration Release
+      dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)/api
+    displayName: 'Build & Publish API'
+
+  # Deploy to Azure App Service
+  - task: AzureWebApp@1
+    displayName: 'Deploy API to Azure'
+    inputs:
+      azureSubscription: 'azure-connection'
+      appName: 'image-gallery-backend'
+      package: '$(Build.ArtifactStagingDirectory)/api'
+      appType: 'webApp'  # Specify the app type here
